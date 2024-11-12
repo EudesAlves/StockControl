@@ -1,0 +1,6 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+find . -name '*.pyc' | xargs -n 1 git rm --cached
+*.pyc
