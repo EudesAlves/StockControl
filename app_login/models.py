@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
 
 class Login(models.Model):
 
@@ -11,6 +12,8 @@ class Login(models.Model):
 
     random_hash = models.TextField(max_length=255)
 
+    creation_date = models.DateTimeField(auto_now_add=True)
+
 
 class User(models.Model):
 
@@ -21,3 +24,5 @@ class User(models.Model):
     email = models.TextField(max_length=255)
 
     login_id = models.IntegerField()
+
+    creation_date = models.DateTimeField(auto_now_add=True)
