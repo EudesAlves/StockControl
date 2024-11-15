@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from app_login.views import view_login
 from app_login.views import view_user
 
@@ -28,3 +30,5 @@ urlpatterns = [
     path('update/<int:id>', view_user.update, name = 'update'),
     path('delete/<int:id>', view_user.delete, name = 'delete'),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
