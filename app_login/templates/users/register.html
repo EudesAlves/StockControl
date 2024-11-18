@@ -4,10 +4,12 @@
     <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
         <div style="text-align: center;" class="container-fluid">
-            <h1>User Registration</h1>
-            Name <input name="user_name" class="form-control-sm" type="text">
-            Age <input name="user_email" class="form-control-sm" type="text">
-            <button class="btn btn-success form-control-sm">Add</button>
+            <h2>Registrar Usuário</h2>
+            Nome <input name="user_name" class="form-control-sm" type="text">
+            Email <input name="user_email" class="form-control-sm" type="text">
+            Senha <input name="login_password" class="form-control-sm" type="password">
+            Confirmar Senha <input name="login_password_confirm" class="form-control-sm" type="password">
+            <button class="btn btn-success form-control-sm">Adicionar</button>
         </div>
     </form>
 </div>
