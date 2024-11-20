@@ -6,7 +6,7 @@ class Login(models.Model):
 
     id = models.AutoField(primary_key=True)
 
-    user = models.TextField(max_length=255)
+    email = models.TextField(max_length=255)
 
     password = models.TextField(max_length=255)
 

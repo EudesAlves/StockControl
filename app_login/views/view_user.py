@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-import hashlib
-import random
-import string
 from app_login.models import User
 from app_login.models import Login
+from app_login.util import LoginUtil
+from app_login.util.LoginUtil import *
 
 def home(request):
     users = {
@@ -23,10 +22,10 @@ def register(request):
             user = User()
             login = Login()
 
-            random_hash = generate_random_hash()
-            login.user = "---"
+            random_hash = LoginUtil.generate_random_hash()
+            login.email = user_email
             login.random_hash = random_hash
-            login.password = generate_password_hash(login_password, random_hash)
+            login.password = LoginUtil.generate_password_hash(login_password, random_hash)
             login.save()
             login_id = (Login.objects.last()).id
 
@@ -71,11 +70,3 @@ def delete(request, id):
             user.delete()
 
         return redirect(home)
-
-def generate_password_hash(password, hash_word):
-    encoded = hashlib.md5(password.encode('utf-8') + hash_word.encode('utf-8')).hexdigest()
-    return encoded
-
-def generate_random_hash():
-    random_size = random.randint(5,9)
-    return ''.join(random.choice(string.ascii_letters) for x in range(random_size))
