@@ -6,7 +6,7 @@
         <thead>
             <tr class="d-flex">
                 <th>Id</th>
-                <th class="col-2">Name</th>
+                <th class="col-2">Nome</th>
                 <th class="col-1">Email</th>
                 <th></th>
                 <th></th>
@@ -18,8 +18,8 @@
                 <td>{{user.id}}</td>
                 <td class="col-2">{{user.name}}</td>
                 <td class="col-1">{{user.email}}</td>
-                <td><a class="btn btn-primary" href="{% url 'update' user.id %}">Update</a></td>
-                <td><a class="btn btn-danger" href="{% url 'delete' user.id %}">Delete</a></td>
+                <td><a class="btn btn-primary" href="{% url 'update' user.id %}">Editar</a></td>
+                <td><a class="btn btn-danger" href="{% url 'delete' user.id %}">Excluir</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -27,7 +27,7 @@
 
 
     <div>
-        <a class="btn btn-primary" style="text-decoration: none;" href="{% url 'register' %}">Add User</a>
+        <a class="btn btn-primary" style="text-decoration: none;" href="{% url 'register' %}">Criar Usuário</a>
     </div>
 </div>
 {% endblock %}

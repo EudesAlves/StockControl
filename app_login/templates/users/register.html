@@ -1,36 +1,50 @@
 {% extends 'users/base.html' %}
 {% block content %}
-<div class="container-fluid"></div>
-    <form action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        <div style="text-align: center;" class="container-fluid">
-            <h2>Registrar Usuário</h2>
-            Nome <input name="user_name" class="form-control-sm" type="text">
-            Email <input name="user_email" class="form-control-sm" type="text">
-            Senha <input name="login_password" class="form-control-sm" type="password">
-            Confirmar Senha <input name="login_password_confirm" class="form-control-sm" type="password">
-            <button class="btn btn-success form-control-sm">Adicionar</button>
-        </div>
-    </form>
-</div>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark gradient-custom text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-5">
+                    {% for message in messages %}
+                    <span class="message_error" role="alert">{{message}}</span>
+                    {% endfor %}
+                  </div>
 
-<div class="container-fluid">
-    <h2>Users List:</h2>
-    <table class="table table-dark table-hover table-striped">
-        <thead>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr class="table-active">
-                <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.email}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        </table>
-</div>
+                  <div class="container-fluid">
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Informe os dados do Usuário</p>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="user_name" type="text" id="typeNameX" class="form-control form-control-lg" />
+                            <label class="form-label" for="typeEmailX">Nome</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="user_email" type="email" id="typeEmailX" class="form-control form-control-lg" />
+                            <label class="form-label" for="typeEmailX">Email</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="login_password" type="password" id="typePasswordX" class="form-control form-control-lg" />
+                            <label class="form-label" for="typeEmailX">Senha</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="login_password_confirm" type="password" id="typePasswordConfirmX" class="form-control form-control-sm" />
+                            <label class="form-label" for="typeEmailX">Confirmar Senha</label>
+                        </div>
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Adicionar</button>
+                    </form>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
 {% endblock %}
