@@ -7,10 +7,11 @@
     <form action="{% url 'update' user.id %}" method="POST">
         {% csrf_token %}
         <div style="text-align: center;" class="container-fluid">
-            <h2>Update User</h2>
-            Name <input name="user_name" class="form-control-sm" type="text" value="{{user.name}}">
+            <h2>Atuazliar Usuário</h2>
+            Nome <input name="user_name" class="form-control-sm" type="text" value="{{user.name}}">
             Email <input name="user_email" class="form-control-sm" type="text" value="{{user.email}}">
-            <button class="btn btn-success form-control-sm">Update</button>
+            <button class="btn btn-success form-control-sm">Atualizar</button>
+            <a href="{% url 'home' %}" class="btn btn-primary form-control-sm">Cancelar</a>
         </div>
     </form>
 </div>

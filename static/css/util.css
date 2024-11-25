@@ -6,3 +6,13 @@
     border-radius: 5px;
     border-color: rgb(149, 56, 81);
 }
+
+.message_success {
+    text-align: center !important;
+    display: block;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+    border: 3px solid;
+    border-radius: 5px;
+    border-color: rgb(3, 199, 36);
+}

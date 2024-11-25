@@ -7,12 +7,12 @@
     <form action="{% url 'delete' user.id %}" method="POST">
         {% csrf_token %}
         <div style="text-align: center;" class="container-fluid">
-            <h2>Confirm to Delete the User</h2>
+            <h2>Confirme para Excluir o Usuário</h2>
             <input name="user_id" type="hidden" value="{{user.id}}" />
-            Name <label name="user_name" class="form-control-sm" type="text">{{user.name}}</label>
+            Nome <label name="user_name" class="form-control-sm" type="text">{{user.name}}</label>
             Email <label name="user_email" class="form-control-sm" type="text">{{user.email}}</label>
-            <a href="{% url 'home' %}" class="btn btn-primary form-control-sm">Cancel</a>
-            <button class="btn btn-danger form-control-sm">Delete</button>
+            <a href="{% url 'home' %}" class="btn btn-primary form-control-sm">Cancelar</a>
+            <button class="btn btn-danger form-control-sm">Excluir</button>
         </div>
     </form>
 </div>

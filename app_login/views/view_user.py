@@ -16,44 +16,34 @@ def home(request):
 def register(request):
     message = MessageAlert()
     if request.method == 'POST':
-        user_name = request.POST.get('user_name')
-        user_email = request.POST.get('user_email')
-        login_password = request.POST.get('login_password')
-        login_password_confirm = request.POST.get('login_password_confirm')
+        form = {}
+        form['name'] = request.POST.get('user_name')
+        form['email'] = request.POST.get('user_email')
+        form['password'] = request.POST.get('login_password')
+        form['password_confirm'] = request.POST.get('login_password_confirm')
+
+        message.messages = validate_user(form)
         
-        if not user_name or not user_email or not login_password or not login_password_confirm:
-            error_text = "Todos os campos devem ser preenchidos"
-            message.add(error_text)
-            return render(request, 'users/register.html', {'messages' : message.messages})
+        if message.messages:
+            return render(request, 'users/register.html', {'messages' : message.messages, 'user' : form})
         
-        query_set = User.objects.filter(email=user_email)
-        if query_set:
-            error_text = "Email já cadastrado no Sistema"
-            message.add(error_text)
-            return render(request, 'users/register.html', {'messages' : message.messages})
-        
-        if login_password != login_password_confirm:
-            error_text = "Campos Senha e Confirmar Senha devem ser iguais"
-            message.add(error_text)
-            return render(request, 'users/register.html', {'messages' : message.messages})
+        login = Login()
+        user = User()
+        random_hash = LoginUtil.generate_random_hash()
+        login.email = form['email']
+        login.random_hash = random_hash
+        login.password = LoginUtil.generate_password_hash(form['password'], random_hash)
+        login.save()
+        login_id = (Login.objects.last()).id
 
-        if user_name and user_email and login_password and login_password_confirm:
-            login = Login()
-            user = User()
-            random_hash = LoginUtil.generate_random_hash()
-            login.email = user_email
-            login.random_hash = random_hash
-            login.password = LoginUtil.generate_password_hash(login_password, random_hash)
-            login.save()
-            login_id = (Login.objects.last()).id
+        user.name = form['name']
+        user.email = form['email']
+        user.login_id = login_id
+        user.save()
 
-            user.name = user_name
-            user.email = user_email
-            user.login_id = login_id
-            user.save()
+        success_message = "Usuário " +form['name']+ " cadastrado com sucesso."
+        return render(request, 'users/register.html', {'success_message' : success_message})
 
-
-    # Return data to page
     return render(request, 'users/register.html')
 
 def update(request, id):
@@ -84,3 +74,21 @@ def delete(request, id):
             user.delete()
 
         return redirect(home)
+
+def validate_user(user):
+    message = MessageAlert()
+    if not user['name'] or not user['email'] or not user['password'] or not user['password_confirm']:
+        error_text = "Todos os campos devem ser preenchidos"
+        message.add(error_text)
+
+    query_set = User.objects.filter(email=user['email'])
+    if query_set:
+        error_text = "Email já cadastrado no Sistema"
+        message.add(error_text)
+
+    if user['password'] != user['password_confirm']:
+            error_text = "Campos Senha e Confirmar Senha devem ser iguais"
+            message.add(error_text)
+
+    return message.messages
+    

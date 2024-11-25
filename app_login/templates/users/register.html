@@ -4,9 +4,15 @@
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
           <div class="card bg-dark gradient-custom text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-                <div class="mb-5">
+                <div class="mb-2">
                     {% for message in messages %}
                     <span class="message_error" role="alert">{{message}}</span>
                     {% endfor %}
@@ -18,22 +24,22 @@
                         <p class="text-white-50 mb-5">Informe os dados do Usuário</p>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="user_name" type="text" id="typeNameX" class="form-control form-control-lg" />
+                            <input name="user_name" type="text" id="typeNameX" class="form-control form-control-sm" value="{{user.name}}" />
                             <label class="form-label" for="typeEmailX">Nome</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="user_email" type="email" id="typeEmailX" class="form-control form-control-lg" />
+                            <input name="user_email" type="email" id="typeEmailX" class="form-control form-control-sm" value="{{user.email}}" />
                             <label class="form-label" for="typeEmailX">Email</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="login_password" type="password" id="typePasswordX" class="form-control form-control-lg" />
+                            <input name="login_password" type="password" id="typePasswordX" class="form-control form-control-sm" value="{{user.password}}" />
                             <label class="form-label" for="typeEmailX">Senha</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="login_password_confirm" type="password" id="typePasswordConfirmX" class="form-control form-control-sm" />
+                            <input name="login_password_confirm" type="password" id="typePasswordConfirmX" class="form-control form-control-sm" value="{{user.password_confirm}}" />
                             <label class="form-label" for="typeEmailX">Confirmar Senha</label>
                         </div>
 
