@@ -31,8 +31,9 @@
             <li class="nav-item active"></li>
           </ul>
           
-          <div class="form-inline my-2 my-lg-0">
-            <span class="form-control mr-sm-2">{{ request.session.user_name }}</span>
+          <div class="navbar-nav mr-auto">
+            <span class="form-control mr-sm-1">{{ request.session.user_name }}</span>
+            <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'logout' %}">Sair</a>
           </div>
         </div>
     </nav>

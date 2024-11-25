@@ -10,3 +10,8 @@ class LoginUtil():
     def generate_random_hash():
         random_size = random.randint(5,9)
         return ''.join(random.choice(string.ascii_letters) for x in range(random_size))
+    
+    def is_logged(request):
+        if 'user_id' in request.session:
+            return True
+        return False

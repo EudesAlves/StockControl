@@ -6,7 +6,11 @@ from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
 from app_login.util.MessageAlert import *
 
+
 def home(request):
+    if not LoginUtil.is_logged(request):
+        return redirect('login')
+
     users = {
         'users': User.objects.all()
     }
@@ -14,6 +18,9 @@ def home(request):
     return render(request, 'users/home.html', users)
 
 def register(request):
+    if not LoginUtil.is_logged(request):
+        return redirect('login')
+
     message = MessageAlert()
     if request.method == 'POST':
         form = {}
@@ -47,6 +54,9 @@ def register(request):
     return render(request, 'users/register.html')
 
 def update(request, id):
+    if not LoginUtil.is_logged(request):
+        return redirect('login')
+
     if request.method == 'GET':
         user = User.objects.get(id=id)
         return render(request, "users/update.html", {"user": user})
@@ -63,6 +73,9 @@ def update(request, id):
         return redirect(home)
 
 def delete(request, id):
+    if not LoginUtil.is_logged(request):
+        return redirect('login')
+
     if request.method == 'GET':
         user = User.objects.get(id=id)
         return render(request, "users/delete.html", {"user": user})
@@ -91,4 +104,3 @@ def validate_user(user):
             message.add(error_text)
 
     return message.messages
-    

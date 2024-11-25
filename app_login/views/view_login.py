@@ -45,3 +45,8 @@ def validate_login(request):
         return redirect(view_user.home)
     
     return render(request, 'login/index.html')
+
+def logout(request):
+    request.session.clear()
+    request.session.aflush()
+    return redirect('login')
