@@ -62,13 +62,20 @@ def update(request, id):
         return render(request, "users/update.html", {"user": user})
     
     if request.method == 'POST':
-        user_name = request.POST.get('user_name')
-        user_email = request.POST.get('user_email')
-        if user_name and user_email:
-            user = User.objects.get(id=id)
-            user.name = user_name
-            user.email = user_email
-            user.save()
+        form = {}
+        form['id'] = id
+        form['name'] = request.POST.get('user_name')
+        form['email'] = request.POST.get('user_email')
+        if not form['name'] or not form['email']:
+            message = MessageAlert()
+            error = "Todos os campos devem ser preenchidos"
+            message.add(error)
+            return render(request, 'users/update.html', {'messages' : message.messages, 'user' : form})
+
+        user = User.objects.get(id=id)
+        user.name = form['name']
+        user.email = form['email']
+        user.save()
 
         return redirect(home)
 

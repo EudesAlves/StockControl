@@ -1,18 +1,48 @@
 {% extends 'users/base.html' %}
 {% block content %}
-<div class="container-fluid"></div>
-    <div>
-        
-    </div>
-    <form action="{% url 'update' user.id %}" method="POST">
-        {% csrf_token %}
-        <div style="text-align: center;" class="container-fluid">
-            <h2>Atuazliar Usuário</h2>
-            Nome <input name="user_name" class="form-control-sm" type="text" value="{{user.name}}">
-            Email <input name="user_email" class="form-control-sm" type="text" value="{{user.email}}">
-            <button class="btn btn-success form-control-sm">Atualizar</button>
-            <a href="{% url 'home' %}" class="btn btn-primary form-control-sm">Cancelar</a>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-2">
+                    {% for message in messages %}
+                    <span class="message_error" role="alert">{{message}}</span>
+                    {% endfor %}
+                  </div>
+
+                  <div class="container-fluid">
+                    <form action="{% url 'update' user.id %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Atualização de Usuário</p>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="user_name" type="text" id="typeNameX" class="form-control form-control-sm" value="{{user.name}}" />
+                            <label class="form-label" for="typeEmailX">Nome</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="user_email" type="email" id="typeEmailX" class="form-control form-control-sm" value="{{user.email}}" />
+                            <label class="form-label" for="typeEmailX">Email</label>
+                        </div>
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-info btn-lg px-5" type="submit">Atualizar</button>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Cancelar</a>
+                    </form>
+                </div>
+
+            </div>
+          </div>
         </div>
-    </form>
-</div>
+      </div>
+    </div>
+</section>
+
 {% endblock %}
