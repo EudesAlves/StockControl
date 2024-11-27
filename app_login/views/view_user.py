@@ -77,7 +77,8 @@ def update(request, id):
         user.email = form['email']
         user.save()
 
-        return redirect(home)
+        success_message = "Usuário " +form['name']+ " atualizado com sucesso."
+        return render(request, 'users/update.html', {'success_message' : success_message, 'user' : form})
 
 def delete(request, id):
     if not LoginUtil.is_logged(request):
@@ -88,12 +89,17 @@ def delete(request, id):
         return render(request, "users/delete.html", {"user": user})
     
     if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        if user_id:
-            user = User.objects.get(id=user_id)
+        form = {}
+        if id:
+            user = User.objects.get(id=id)
+            form['id'] = user.id
+            form['name'] = user.name
+            form['email'] = user.email
+
             user.delete()
 
-        return redirect(home)
+        success_message = "Usuário " +form['name']+ " excluído com sucesso."
+        return render(request, 'users/delete.html', {'success_message' : success_message, 'user' : form})
 
 def validate_user(user):
     message = MessageAlert()

@@ -1,19 +1,49 @@
 {% extends 'users/base.html' %}
 {% block content %}
-<div class="container-fluid"></div>
-    <div>
-        
-    </div>
-    <form action="{% url 'delete' user.id %}" method="POST">
-        {% csrf_token %}
-        <div style="text-align: center;" class="container-fluid">
-            <h2>Confirme para Excluir o Usuário</h2>
-            <input name="user_id" type="hidden" value="{{user.id}}" />
-            Nome <label name="user_name" class="form-control-sm" type="text">{{user.name}}</label>
-            Email <label name="user_email" class="form-control-sm" type="text">{{user.email}}</label>
-            <a href="{% url 'home' %}" class="btn btn-primary form-control-sm">Cancelar</a>
-            <button class="btn btn-danger form-control-sm">Excluir</button>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success text-white" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+                  <div class="container-fluid">
+                    <form action="{% url 'delete' user.id %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Confirme para Excluir o Usuário</p>
+                        <input name="user_id" type="hidden" value="{{user.id}}" />
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <label name="user_name" type="text" id="typeNameX" class="form-control form-control-sm">{{user.name}}</label>
+                            <label class="form-label" for="typeEmailX">Nome</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <label name="user_email" type="email" id="typeEmailX" class="form-control form-control-sm">{{user.email}}</label>
+                            <label class="form-label" for="typeEmailX">Email</label>
+                        </div>
+
+                        {% if not success_message %}
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger btn-lg px-5" type="submit">Excluir</button>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Cancelar</a>
+                        {% endif %}
+
+                        {% if success_message %}
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Voltar</a>
+                        {% endif %}
+                    </form>
+                </div>
+
+            </div>
+          </div>
         </div>
-    </form>
-</div>
+      </div>
+    </div>
+</section>
 {% endblock %}
