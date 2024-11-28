@@ -1,0 +1,44 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success text-white" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+                  <div class="container-fluid">
+                    <form action="{% url 'tech_delete' tech.id %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Confirme para Excluir o Técnico</p>
+                        <input name="tech_id" type="hidden" value="{{tech.id}}" />
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <label name="tech_name" type="text" id="typeNameX" class="form-control form-control-sm">{{tech.name}}</label>
+                            <label class="form-label" for="typeEmailX">Nome</label>
+                        </div>
+
+                        {% if not success_message %}
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger btn-lg px-5" type="submit">Excluir</button>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'tech_list' %}">Cancelar</a>
+                        {% endif %}
+
+                        {% if success_message %}
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'tech_list' %}">Voltar</a>
+                        {% endif %}
+                    </form>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

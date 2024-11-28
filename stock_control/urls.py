@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from app_login.views import view_login
 from app_login.views import view_user
+from app_stock.views import view_technician
+from app_stock.views import view_product
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,10 +29,16 @@ urlpatterns = [
     path('login/', view_login.login, name = 'login'),
     path('login/validate_login', view_login.validate_login, name = 'validate_login'),
     path('login/logout', view_login.logout, name = 'logout'),
+
     path('users/', view_user.home, name = 'home'),
     path('register/', view_user.register, name = 'register'),
     path('update/<int:id>', view_user.update, name = 'update'),
     path('delete/<int:id>', view_user.delete, name = 'delete'),
+
+    path('techs/', view_technician.tech_list, name = 'tech_list'),
+    path('techs/register', view_technician.tech_register, name = 'tech_register'),
+    path('techs/update/<int:id>', view_technician.tech_update, name = 'tech_update'),
+    path('techs/delete/<int:id>', view_technician.tech_delete, name = 'tech_delete'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
