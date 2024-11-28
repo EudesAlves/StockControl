@@ -22,6 +22,7 @@ from app_login.views import view_login
 from app_login.views import view_user
 from app_stock.views import view_technician
 from app_stock.views import view_product
+from app_stock.views import view_supplier
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,6 +40,11 @@ urlpatterns = [
     path('techs/register', view_technician.tech_register, name = 'tech_register'),
     path('techs/update/<int:id>', view_technician.tech_update, name = 'tech_update'),
     path('techs/delete/<int:id>', view_technician.tech_delete, name = 'tech_delete'),
+
+    path('suppliers/', view_supplier.supplier_list, name = 'supplier_list'),
+    path('suppliers/register', view_supplier.supplier_register, name = 'supplier_register'),
+    path('suppliers/update/<int:id>', view_supplier.supplier_update, name = 'supplier_update'),
+    path('suppliers/delete/<int:id>', view_supplier.supplier_delete, name = 'supplier_delete'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
