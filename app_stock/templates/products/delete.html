@@ -14,23 +14,23 @@
             <div class="card-body p-5 text-center">
 
                   <div class="container-fluid">
-                    <form action="{% url 'supplier_delete' supplier.id %}" method="POST">
+                    <form action="{% url 'product_delete' product.id %}" method="POST">
                         {% csrf_token %}
-                        <p class="text-white-50 mb-5">Confirme para Excluir o Fornecedor</p>
-                        <input name="supplier_id" type="hidden" value="{{supplier.id}}" />
+                        <p class="text-white-50 mb-5">Confirme para Excluir o Produto</p>
+                        <input name="product_id" type="hidden" value="{{product.id}}" />
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <label name="supplier_name" type="text" id="typeNameX" class="form-control form-control-sm">{{supplier.name}}</label>
+                            <label name="product_name" type="text" id="typeNameX" class="form-control form-control-sm">{{product.name}}</label>
                             <label class="form-label" for="typeEmailX">Nome</label>
                         </div>
 
                         {% if not success_message %}
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger btn-lg px-5" type="submit">Excluir</button>
-                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'supplier_list' %}">Cancelar</a>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'product_list' %}">Cancelar</a>
                         {% endif %}
 
                         {% if success_message %}
-                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'supplier_list' %}">Voltar</a>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'product_list' %}">Voltar</a>
                         {% endif %}
                     </form>
                 </div>

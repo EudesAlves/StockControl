@@ -23,6 +23,7 @@ from app_login.views import view_user
 from app_stock.views import view_technician
 from app_stock.views import view_product
 from app_stock.views import view_supplier
+from app_stock.views import view_stock
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,6 +46,16 @@ urlpatterns = [
     path('suppliers/register', view_supplier.supplier_register, name = 'supplier_register'),
     path('suppliers/update/<int:id>', view_supplier.supplier_update, name = 'supplier_update'),
     path('suppliers/delete/<int:id>', view_supplier.supplier_delete, name = 'supplier_delete'),
+
+    path('products/', view_product.product_list, name = 'product_list'),
+    path('products/register', view_product.product_register, name = 'product_register'),
+    path('products/update/<int:id>', view_product.product_update, name = 'product_update'),
+    path('products/delete/<int:id>', view_product.product_delete, name = 'product_delete'),
+
+    path('stocks/', view_stock.stock_list, name = 'stock_list'),
+    path('stocks/register', view_stock.stock_register, name = 'stock_register'),
+    path('stocks/update/<int:id>', view_stock.stock_update, name = 'stock_update'),
+    path('stocks/delete/<int:id>', view_stock.stock_delete, name = 'stock_delete'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success text-white" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-2">
+                    {% for message in messages %}
+                    <span class="message_error" role="alert">{{message}}</span>
+                    {% endfor %}
+                  </div>
+
+                  <div class="container-fluid">
+                    <form action="{% url 'stock_update' stock.id %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Atualização de Estoque</p>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="stock_name" type="text" id="typeNameX" class="form-control form-control-sm" value="{{stock.name}}" />
+                            <label class="form-label" for="typeEmailX">Nome</label>
+                        </div>
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-info btn-lg px-5" type="submit">Atualizar</button>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'stock_list' %}">Cancelar</a>
+                    </form>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}
