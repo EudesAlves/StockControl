@@ -24,6 +24,7 @@ from app_stock.views import view_technician
 from app_stock.views import view_product
 from app_stock.views import view_supplier
 from app_stock.views import view_stock
+from app_stock.views import view_movement
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -56,6 +57,10 @@ urlpatterns = [
     path('stocks/register', view_stock.stock_register, name = 'stock_register'),
     path('stocks/update/<int:id>', view_stock.stock_update, name = 'stock_update'),
     path('stocks/delete/<int:id>', view_stock.stock_delete, name = 'stock_delete'),
+
+    path('movements/', view_movement.movement_list, name = 'movement_list'),
+    path('movements/entry', view_movement.movement_entry, name = 'movement_entry'),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
