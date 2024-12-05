@@ -1,0 +1,75 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success text-white" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div class="mb-2">
+                    {% for message in messages %}
+                    <span class="message_error" role="alert">{{message}}</span>
+                    {% endfor %}
+                  </div>
+
+                  <div class="container-fluid">
+                    <form action="{% url 'movement_entry' %}" method="POST">
+                        {% csrf_token %}
+                        <p class="text-white-50 mb-5">Informe os dados para Entrada</p>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="invoice" type="text" id="invoiceInput" class="form-control form-control-sm" value="{{movement.invoice}}" placeholder="Nota Fiscal" />
+                            <label class="form-label" for="typeEmailX">Nota Fiscal</label>
+                        </div>
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="invoice_date" type="date" id="invoiceDateInput" class="form-control form-control-sm" maxlength="6" value="{{movement.invoice_date}}" />
+                            <label class="form-label" for="typeEmailX">Data Nota Fiscal</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <select name="product" id="productSelect" class="form-select align-items-center" sel>
+                                <option class="form-label text-center">Selecione o Produto</option>
+                                {% for product in products %}
+                                <option value="{{product.id}}" class="form-label text-center">{{product.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label class="form-label" for="productSelect">Produto</label>
+                        </div>
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="quantity" type="number" id="quantityInput" class="form-control form-control-sm" value="{{movement.quantity}}" />
+                            <label class="form-label" for="typeQuantityX">Quantidade</label>
+                        </div>
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <select name="supplier" id="supplierSelect" class="form-select align-items-center" sel>
+                                <option class="form-label text-center">Selecione o Fornecedor</option>
+                                {% for supplier in suppliers %}
+                                <option value="{{supplier.id}}" class="form-label text-center">{{supplier.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label class="form-label" for="supplierSelect">Fornecedor</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <label name="classification" id="classificationLabel" class="form-control form-control-sm">
+                                {{classification}}</label>
+                            <label class="form-label" for="typeEmailX">Classificação</label>
+                        </div>
+                        
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Adicionar</button>
+                    </form>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

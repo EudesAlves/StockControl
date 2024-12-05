@@ -15,7 +15,7 @@ class History(models.Model):
 
     supplier_id = models.IntegerField(blank=True)
 
-    technician_id = models.IntegerField(blank=True)
+    technician_id = models.IntegerField(blank=True, null=True)
 
     classification = models.TextField(max_length=100)
 
