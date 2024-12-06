@@ -3,9 +3,9 @@ from django.db import models
 class History(models.Model):
     id = models.AutoField(primary_key=True)
 
-    invoice = models.TextField(max_length=100, blank=True)
+    invoice = models.TextField(max_length=100, blank=True, null=True)
 
-    invoice_date = models.DateTimeField(blank=True)
+    invoice_date = models.DateTimeField(blank=True, null=True)
     
     stock_id = models.IntegerField()
 
@@ -13,7 +13,7 @@ class History(models.Model):
 
     quantity = models.IntegerField()
 
-    supplier_id = models.IntegerField(blank=True)
+    supplier_id = models.IntegerField(blank=True, null=True)
 
     technician_id = models.IntegerField(blank=True, null=True)
 

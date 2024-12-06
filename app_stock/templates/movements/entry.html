@@ -34,7 +34,7 @@
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                             <select name="product" id="productSelect" class="form-select align-items-center" sel>
-                                <option class="form-label text-center">Selecione o Produto</option>
+                                <option value="0" class="form-label text-center">Selecione o Produto</option>
                                 {% for product in products %}
                                 <option value="{{product.id}}" class="form-label text-center">{{product.name}}</option>
                                 {% endfor %}
@@ -47,7 +47,7 @@
                         </div>
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                             <select name="supplier" id="supplierSelect" class="form-select align-items-center" sel>
-                                <option class="form-label text-center">Selecione o Fornecedor</option>
+                                <option value="0" class="form-label text-center">Selecione o Fornecedor</option>
                                 {% for supplier in suppliers %}
                                 <option value="{{supplier.id}}" class="form-label text-center">{{supplier.name}}</option>
                                 {% endfor %}
