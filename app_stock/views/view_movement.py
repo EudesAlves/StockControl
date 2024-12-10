@@ -7,6 +7,8 @@ from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
 from app_login.util.MessageAlert import *
 from app_stock.util.StockUtil import *
+from datetime import date
+from datetime import datetime
 
 def movement_list(request):
     if not LoginUtil.is_logged(request):
@@ -81,7 +83,42 @@ def validate_movement(movement):
         error_text = "Informe uma Quantidade válida"
         message.add(error_text) 
 
+    if not invoice_date_is_valid(movement['invoice_date']):
+        error_text = "Informe uma Data da Nota válida"
+        message.add(error_text) 
+
     return message.messages
+
+def invoice_date_is_valid(invoice_date):
+    is_valid = True
+    
+    index = invoice_date.index("-")
+    if index > 4:
+        return False
+
+    invoice_date_format = datetime.strptime(invoice_date, '%Y-%m-%d').date()
+    today = date.today()
+    if invoice_date_format > today:
+        print('Data da Nota não pode ser maior que data Atual')
+        return False
+    
+
+    invoice_year = invoice_date_format.year
+    invoice_month = invoice_date_format.month
+    invoice_day = invoice_date_format.day
+    DECEMBER = 12
+    JANUARY = 1
+
+    if invoice_year - today.year == -1:
+        if invoice_month == DECEMBER and today.month == JANUARY:
+            if invoice_day > 27 and today.day < 4:
+                return True
+            else:
+                return False
+        else:
+            return False
+    
+    return True
 
 def print_form(form):
     print(form['invoice'])
@@ -89,3 +126,6 @@ def print_form(form):
     print(form['product'])
     print(form['quantity'])
     print(form['supplier'])
+
+def search_product(request):
+    pass

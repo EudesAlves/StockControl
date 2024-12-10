@@ -1,5 +1,32 @@
 {% extends 'users/base.html' %}
 {% block content %}
+<!-- Modal Produto -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Escolha o Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!--form>-->
+                {% csrf_token %}
+                <div class="input-group mb-2">
+                        <input type="text" class="form-control border-right-0 pl-3" name="search" placeholder="Digite o Produto" value="">
+                        <span class="input-group-append">
+                        <button id="search-product" class="btn ripple btn-primary" onclick=""><i class="fa fa-search">Busca</i></button>
+                    </span>
+                </div>
+            <!--</form>-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Adicionar Produto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <section class="vh-100">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -30,6 +57,16 @@
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                             <input name="invoice_date" type="date" id="invoiceDateInput" class="form-control form-control-sm" maxlength="6" value="{{movement.invoice_date}}" />
                             <label class="form-label" for="typeEmailX">Data Nota Fiscal</label>
+                        </div>
+
+                        <div data-mdb-input-init class="input-group form-outline form-white mb-4">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                                </svg>
+                                <span class="visually-hidden">Button</span>
+                            </button>
+
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
