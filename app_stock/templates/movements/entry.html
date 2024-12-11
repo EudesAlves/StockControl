@@ -72,22 +72,13 @@
                                 </svg>
                                 <span class="visually-hidden">Button</span>
                             </button>
-                            <input id="id_choosed_product" type="hidden" name="product_id" />
-                            <label id="lbl_choosed_product" name="product_name"
-                              class="text-center col-10 btn-outline-light rounded border border-light lh-lg" 
-                              style="margin-left: 10px !important;" disabled>Busque por um Produto
-                            </label>
+                            <input id="id_choosed_product" type="hidden" name="product_id" value="{{movement.product_id}}" />
+                            <input id="txt_choosed_product" name="product_name" type="text" class="form-control form-control-sm" value="{{movement.product_name}}" readonly />
+
+                            <label class="form-label text-center col-12" for="productName">Produto</label>
                         </div>
 
-                        <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <select name="product" id="productSelect" class="form-select align-items-center" sel>
-                                <option value="0" class="form-label text-center">Selecione o Produto</option>
-                                {% for product in products %}
-                                <option value="{{product.id}}" class="form-label text-center">{{product.name}}</option>
-                                {% endfor %}
-                            </select>
-                            <label class="form-label" for="productSelect">Produto</label>
-                        </div>
+
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                             <input name="quantity" type="number" id="quantityInput" class="form-control form-control-sm" value="{{movement.quantity}}" />
                             <label class="form-label" for="typeQuantityX">Quantidade</label>

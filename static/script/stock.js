@@ -27,7 +27,7 @@ $(document).ready(function() {
 
         if(product_option.text()) {
             $('#id_choosed_product').attr('value', product_option.val());
-            $('#lbl_choosed_product').html(product_option.text());
+            $('#txt_choosed_product').attr('value', product_option.text());
             $('#staticBackdrop').modal('toggle');
         }
     });
