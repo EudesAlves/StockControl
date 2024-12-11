@@ -12,16 +12,22 @@
             <!--form>-->
                 {% csrf_token %}
                 <div class="input-group mb-2">
-                        <input type="text" class="form-control border-right-0 pl-3" name="search" placeholder="Digite o Produto" value="">
+                        <input type="text" class="form-control border-right-0 pl-3" id="txt_search_product" placeholder="Digite o nome do Produto" value="">
                         <span class="input-group-append">
-                        <button id="search-product" class="btn ripple btn-primary" onclick=""><i class="fa fa-search">Busca</i></button>
+                        <button id="btn_search_product" class="btn ripple btn-primary" onclick=""><i class="fa fa-search">Busca</i></button>
                     </span>
+                </div>
+
+                <div class="input-group mb-2">
+                  <select name="" class="form-control border-right-0 pl-3" id="product_list">
+
+                  </select>
                 </div>
             <!--</form>-->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Adicionar Produto</button>
+          <button type="button" class="btn btn-primary" id="btn_add_product" onclick="">Adicionar Produto</button>
         </div>
       </div>
     </div>
@@ -60,13 +66,17 @@
                         </div>
 
                         <div data-mdb-input-init class="input-group form-outline form-white mb-4">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                                 </svg>
                                 <span class="visually-hidden">Button</span>
                             </button>
-
+                            <input id="id_choosed_product" type="hidden" name="product_id" />
+                            <label id="lbl_choosed_product" name="product_name"
+                              class="text-center col-10 btn-outline-light rounded border border-light lh-lg" 
+                              style="margin-left: 10px !important;" disabled>Busque por um Produto
+                            </label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">

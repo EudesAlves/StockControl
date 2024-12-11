@@ -60,7 +60,7 @@ urlpatterns = [
 
     path('movements/', view_movement.movement_list, name = 'movement_list'),
     path('movements/entry', view_movement.movement_entry, name = 'movement_entry'),
-    path('movements/entry', view_movement.search_product, name = 'search_product'),    
+    path('movements/search_product', view_movement.search_product, name = 'search_product'),    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from app_stock.models.model_product import Product
 from app_stock.models.model_history import History
 from app_stock.models.model_supplier import Supplier
@@ -37,6 +38,7 @@ def movement_entry(request):
         form['product'] = request.POST.get('product')
         form['quantity'] = request.POST.get('quantity')
         form['supplier'] = request.POST.get('supplier')
+        form['product_id'] = request.POST.get('product_id')
 
         print_form(form)        
 
@@ -83,9 +85,10 @@ def validate_movement(movement):
         error_text = "Informe uma Quantidade válida"
         message.add(error_text) 
 
-    if not invoice_date_is_valid(movement['invoice_date']):
-        error_text = "Informe uma Data da Nota válida"
-        message.add(error_text) 
+    if movement['invoice_date']:
+        if not invoice_date_is_valid(movement['invoice_date']):
+            error_text = "Informe uma Data da Nota válida"
+            message.add(error_text) 
 
     return message.messages
 
@@ -126,6 +129,16 @@ def print_form(form):
     print(form['product'])
     print(form['quantity'])
     print(form['supplier'])
+    print(form['product_id'])
 
 def search_product(request):
-    pass
+    if request.method == 'POST':
+        searched = request.POST.get('searched')
+        print(searched)
+        products = Product.objects.filter(name__contains=searched)
+        dict_products = {}
+        for product in products:
+            dict_products[product.id] = product.name
+        print(dict_products)
+
+    return JsonResponse(dict_products, safe=False)
