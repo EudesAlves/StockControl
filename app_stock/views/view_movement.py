@@ -15,6 +15,8 @@ def movement_list(request):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    populate_initial_data(request)
+    
     movements = {
         'movements': History.objects.all()
     }
@@ -144,3 +146,8 @@ def search_product(request):
         print(dict_products)
 
     return JsonResponse(dict_products, safe=False)
+
+def populate_initial_data(request):
+    if not 'initial_stock' in request.session:
+        request.session['initial_stock'] = 1
+        StockUtil.populate_initial_stock()

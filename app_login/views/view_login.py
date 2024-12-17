@@ -8,6 +8,8 @@ from app_login.util.LoginUtil import *
 from app_login.util.MessageAlert import *
 
 def login(request):
+    populate_initial_data(request)
+
     return render(request, 'login/index.html')
 
 def validate_login(request):
@@ -50,3 +52,8 @@ def logout(request):
     request.session.clear()
     request.session.aflush()
     return redirect('login')
+
+def populate_initial_data(request):
+    if not 'initial_login' in request.session:
+        request.session['initial_login'] = 1
+        LoginUtil.populate_initial_login()
