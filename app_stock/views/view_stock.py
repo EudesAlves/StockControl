@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app_stock.models.model_stock import Stock
+from app_stock.models.model_history import History
 from app_login.util import LoginUtil
 from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
@@ -67,13 +68,18 @@ def stock_delete(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    stock = Stock.objects.get(id=id)
     if request.method == 'GET':
-        stock = Stock.objects.get(id=id)
         return render(request, "stocks/delete.html", {"stock": stock})
     
     if request.method == 'POST':
         form = {}
         if id:
+            message = MessageAlert()
+            message.messages = check_dependency(id)
+            if message.messages:
+                return render(request, "stocks/delete.html", {'messages' : message.messages, "stock": stock})
+
             stock = Stock.objects.get(id=id)
             form['id'] = stock.id
             form['name'] = stock.name
@@ -89,4 +95,13 @@ def validate_stock(stock):
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
+    return message.messages
+
+def check_dependency(stock_id):
+    message = MessageAlert()
+    queryset = History.objects.filter(stock_id=stock_id)
+    if queryset.count() > 0:
+        error_text = "Este estoque está relacionado a uma Movimentação e não pode ser excluído."
+        message.add(error_text)
+    
     return message.messages

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app_stock.models.model_product import Product
+from app_stock.models.model_history import History
 from app_login.util import LoginUtil
 from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
@@ -66,13 +67,18 @@ def product_delete(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    product = Product.objects.get(id=id)
     if request.method == 'GET':
-        product = Product.objects.get(id=id)
         return render(request, "products/delete.html", {"product": product})
     
     if request.method == 'POST':
         form = {}
         if id:
+            message = MessageAlert()
+            message.messages = check_dependency(id)
+            if message.messages:
+                return render(request, "products/delete.html", {'messages' : message.messages, "product": product})
+
             product = Product.objects.get(id=id)
             form['id'] = product.id
             form['name'] = product.name
@@ -88,4 +94,13 @@ def validate_product(product):
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
+    return message.messages
+
+def check_dependency(product_id):
+    message = MessageAlert()
+    queryset = History.objects.filter(product_id=product_id)
+    if queryset.count() > 0:
+        error_text = "Este produto está relacionado a uma Movimentação e não pode ser excluído."
+        message.add(error_text)
+    
     return message.messages

@@ -11,9 +11,6 @@ class ClassificationTransfer(models.TextChoices):
     RETORNO_DEFEITO = 'Retorno Defeito', _('Retorno Defeito')
 
 class StockUtil():
-    def populate_initial_data():
-        populate_initial_stock()
-
     def populate_initial_stock():
         stocks = Stock.objects.all()
         if stocks.count() == 0:

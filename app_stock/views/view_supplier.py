@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app_stock.models.model_supplier import Supplier
+from app_stock.models.model_history import History
 from app_login.util import LoginUtil
 from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
@@ -66,13 +67,18 @@ def supplier_delete(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    supplier = Supplier.objects.get(id=id)
     if request.method == 'GET':
-        supplier = Supplier.objects.get(id=id)
         return render(request, "suppliers/delete.html", {"supplier": supplier})
     
     if request.method == 'POST':
         form = {}
         if id:
+            message = MessageAlert()
+            message.messages = check_dependency(id)
+            if message.messages:
+                return render(request, "suppliers/delete.html", {'messages' : message.messages, "supplier": supplier})
+
             supplier = Supplier.objects.get(id=id)
             form['id'] = supplier.id
             form['name'] = supplier.name
@@ -88,4 +94,13 @@ def validate_supplier(supplier):
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
+    return message.messages
+
+def check_dependency(supplier_id):
+    message = MessageAlert()
+    queryset = History.objects.filter(supplier_id=supplier_id)
+    if queryset.count() > 0:
+        error_text = "Este fornecedor está relacionado a uma Movimentação e não pode ser excluído."
+        message.add(error_text)
+    
     return message.messages
