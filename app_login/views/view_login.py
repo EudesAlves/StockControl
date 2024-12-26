@@ -45,6 +45,7 @@ def validate_login(request):
         request.session['user_name'] = user.name
 
         return redirect(view_user.home)
+        #return redirect('')
     
     return render(request, 'login/index.html')
 

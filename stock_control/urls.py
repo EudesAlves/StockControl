@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.shortcuts import redirect
 from app_login.views import view_login
 from app_login.views import view_user
 from app_stock.views import view_technician
@@ -28,7 +29,7 @@ from app_stock.views import view_movement
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', view_login.login, name = 'login'),
+    #path('', view_login.login, name = 'login'),
     path('login/', view_login.login, name = 'login'),
     path('login/validate_login', view_login.validate_login, name = 'validate_login'),
     path('login/logout', view_login.logout, name = 'logout'),
@@ -60,7 +61,10 @@ urlpatterns = [
 
     path('movements/', view_movement.movement_list, name = 'movement_list'),
     path('movements/entry', view_movement.movement_entry, name = 'movement_entry'),
-    path('movements/search_product', view_movement.search_product, name = 'search_product'),    
+    path('movements/search_product', view_movement.search_product, name = 'search_product'),
+
+    path('', lambda req: redirect('/movements/')),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

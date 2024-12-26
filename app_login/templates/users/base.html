@@ -15,7 +15,7 @@
   </head>
   <body class="gradient-custom">
     <!-- As a heading -->
-    <nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!--nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid collapse navbar-collapse" id="navbarSupportedContent">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="button navbar-toggler-icon bg-dark"></span>
@@ -50,7 +50,38 @@
             <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'logout' %}">Sair</a>
           </div>
         </div>
-    </nav>
+    </nav-->
+
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bg-dark" style="width: 270px;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"></svg>
+        <span class="fs-4">Menu</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="" class="nav-link active" aria-current="page">
+            " Usuários "
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link active" aria-current="page">
+            " Estoques "
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link active" aria-current="page">
+            " Produtos "
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link active" aria-current="page">
+            " Fornecedores "
+          </a>
+        </li>
+      </ul>
+      <hr>
+    </div>
 
     {% block content %}
     {% endblock %}
