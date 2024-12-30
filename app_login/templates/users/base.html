@@ -1,90 +1,35 @@
 {% load static %}
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <link href="{% static 'css/util.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css" />
 
-    <title>Registre</title>
+    <title>Stock Control</title>
   </head>
-  <body class="gradient-custom">
-    <!-- As a heading -->
-    <!--nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid collapse navbar-collapse" id="navbarSupportedContent">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="button navbar-toggler-icon bg-dark"></span>
-          </button>
+  <body class="gradient-custom-stock">
 
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'login' %}">Login</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'home' %}">Usuários</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'tech_list' %}">Técnicos</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'supplier_list' %}">Fornecedores</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'product_list' %}">Produtos</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'stock_list' %}">Estoques</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'movement_list' %}">Movimentações</a>
-            </li>
-          </ul>
-          
-          <div class="navbar-nav mr-auto">
-            <span class="form-control mr-sm-1">{{ request.session.user_name }}</span>
-            <a class="nav-link" style="text-decoration: none; color: rgb(239, 236, 236);" href="{% url 'logout' %}">Sair</a>
-          </div>
-        </div>
-    </nav-->
-
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bg-dark" style="width: 270px;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi pe-none me-2" width="40" height="32"></svg>
-        <span class="fs-4">Menu</span>
-      </a>
-      <hr>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="" class="nav-link active" aria-current="page">
-            " Usuários "
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link active" aria-current="page">
-            " Estoques "
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link active" aria-current="page">
-            " Produtos "
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link active" aria-current="page">
-            " Fornecedores "
-          </a>
-        </li>
-      </ul>
-      <hr>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="{% url 'home' %}">Usuários</a>
+      <a href="{% url 'tech_list' %}">Técnicos</a>
+      <a href="{% url 'supplier_list' %}">Fornecedores</a>
+      <a href="{% url 'product_list' %}">Produtos</a>
+      <a href="{% url 'stock_list' %}">Estoques</a>
+      <a href="{% url 'movement_list' %}">Movimentações</a>
     </div>
 
-    {% block content %}
-    {% endblock %}
+    <div id="main" style="height: auto;">
+      <button class="openbtn" onclick="openNav()">☰ Menu</button>  
+        {% block content %}
+        {% endblock %}
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -97,6 +42,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="{% static 'script/stock.js' %}"></script>
+    <script src="{% static 'script/stock.js' %}"></script>   
+
+    <script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+
+    openNav();
+    </script>
+
+    
+   
   </body>
-</html>
+</html> 
