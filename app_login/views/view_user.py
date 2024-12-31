@@ -98,6 +98,8 @@ def delete(request, id):
 
             user.delete()
 
+            delete_login(user.login_id)
+
         success_message = "Usuário " +form['name']+ " excluído com sucesso."
         return render(request, 'users/delete.html', {'success_message' : success_message, 'user' : form})
 
@@ -117,3 +119,7 @@ def validate_user(user):
             message.add(error_text)
 
     return message.messages
+
+def delete_login(login_id):
+    login = Login.objects.get(id=login_id)
+    login.delete()
