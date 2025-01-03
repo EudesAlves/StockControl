@@ -12,6 +12,8 @@ class Login(models.Model):
 
     random_hash = models.TextField(max_length=255)
 
+    active = models.BooleanField(default=1)
+
     creation_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -24,5 +26,7 @@ class User(models.Model):
     email = models.TextField(max_length=255)
 
     login_id = models.IntegerField()
+
+    active = models.BooleanField(default=1)
 
     creation_date = models.DateTimeField(auto_now_add=True)

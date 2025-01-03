@@ -24,7 +24,7 @@ def validate_login(request):
             return render(request, 'login/index.html', {'messages' : message.messages})
             
         login = Login()
-        query_set = Login.objects.filter(email=login_email)
+        query_set = Login.objects.filter(email=login_email, active=True)
         if not query_set:
             error_text = "Email não está cadastrado"
             message.add(error_text)

@@ -12,7 +12,7 @@ def home(request):
         return redirect('login')
 
     users = {
-        'users': User.objects.all()
+        'users': User.objects.filter(active=True)
     }
 
     return render(request, 'users/home.html', users)
@@ -96,7 +96,8 @@ def delete(request, id):
             form['name'] = user.name
             form['email'] = user.email
 
-            user.delete()
+            user.active = False
+            user.save()
 
             delete_login(user.login_id)
 
@@ -122,4 +123,5 @@ def validate_user(user):
 
 def delete_login(login_id):
     login = Login.objects.get(id=login_id)
-    login.delete()
+    login.active = False
+    login.save()
