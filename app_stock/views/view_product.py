@@ -11,7 +11,7 @@ def product_list(request):
         return redirect('login')
 
     products = {
-        'products': Product.objects.all()
+        'products': Product.objects.filter(active=True)
     }
 
     return render(request, 'products/index.html', products)
@@ -74,16 +74,12 @@ def product_delete(request, id):
     if request.method == 'POST':
         form = {}
         if id:
-            message = MessageAlert()
-            message.messages = check_dependency(id)
-            if message.messages:
-                return render(request, "products/delete.html", {'messages' : message.messages, "product": product})
-
             product = Product.objects.get(id=id)
             form['id'] = product.id
             form['name'] = product.name
 
-            product.delete()
+            product.active = False
+            product.save()
 
         success_message = "Produto " +form['name']+ " excluído com sucesso."
         return render(request, 'products/delete.html', {'success_message' : success_message, 'product' : form})
@@ -94,13 +90,4 @@ def validate_product(product):
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
-    return message.messages
-
-def check_dependency(product_id):
-    message = MessageAlert()
-    queryset = History.objects.filter(product_id=product_id)
-    if queryset.count() > 0:
-        error_text = "Este produto está relacionado a uma Movimentação e não pode ser excluído."
-        message.add(error_text)
-    
     return message.messages

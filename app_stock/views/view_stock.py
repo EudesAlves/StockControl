@@ -12,7 +12,7 @@ def stock_list(request):
         return redirect('login')
 
     stocks = {
-        'stocks': Stock.objects.all()
+        'stocks': Stock.objects.filter(active=True)
     }
 
     return render(request, 'stocks/index.html', stocks)
@@ -75,16 +75,12 @@ def stock_delete(request, id):
     if request.method == 'POST':
         form = {}
         if id:
-            message = MessageAlert()
-            message.messages = check_dependency(id)
-            if message.messages:
-                return render(request, "stocks/delete.html", {'messages' : message.messages, "stock": stock})
-
             stock = Stock.objects.get(id=id)
             form['id'] = stock.id
             form['name'] = stock.name
 
-            stock.delete()
+            stock.active = False
+            stock.save()
 
         success_message = "Estoque " +form['name']+ " excluído com sucesso."
         return render(request, 'stocks/delete.html', {'success_message' : success_message, 'stock' : form})
@@ -95,13 +91,4 @@ def validate_stock(stock):
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
-    return message.messages
-
-def check_dependency(stock_id):
-    message = MessageAlert()
-    queryset = History.objects.filter(stock_id=stock_id)
-    if queryset.count() > 0:
-        error_text = "Este estoque está relacionado a uma Movimentação e não pode ser excluído."
-        message.add(error_text)
-    
     return message.messages

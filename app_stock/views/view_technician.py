@@ -10,7 +10,7 @@ def tech_list(request):
         return redirect('login')
 
     techs = {
-        'techs': Technician.objects.all()
+        'techs': Technician.objects.filter(active=True)
     }
 
     return render(request, 'techs/index.html', techs)
@@ -77,7 +77,8 @@ def tech_delete(request, id):
             form['id'] = tech.id
             form['name'] = tech.name
 
-            tech.delete()
+            tech.active = False
+            tech.save()
 
         success_message = "Técnico " +form['name']+ " excluído com sucesso."
         return render(request, 'techs/delete.html', {'success_message' : success_message, 'tech' : form})
