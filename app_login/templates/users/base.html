@@ -23,10 +23,11 @@
       <a href="{% url 'product_list' %}">Produtos</a>
       <a href="{% url 'stock_list' %}">Estoques</a>
       <a href="{% url 'movement_list' %}">Movimentações</a>
+      <a href="{% url 'movement_transference' %}">Transferência</a>
     </div>
 
     <div id="main" style="height: auto;">
-      <button class="openbtn" onclick="openNav()">☰ Menu</button>  
+      <button id="btnOpenMenu" class="openbtn" onclick="openNav()">☰ Menu</button>  
         {% block content %}
         {% endblock %}
     </div>
@@ -48,11 +49,13 @@
     function openNav() {
       document.getElementById("mySidebar").style.width = "250px";
       document.getElementById("main").style.marginLeft = "250px";
+      document.getElementById("btnOpenMenu").style.display = "none";
     }
 
     function closeNav() {
       document.getElementById("mySidebar").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
+      document.getElementById("btnOpenMenu").style.display = "block";
     }
 
     openNav();

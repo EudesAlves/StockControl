@@ -28,7 +28,6 @@ def movement_entry(request):
         return redirect('login')
 
     message = MessageAlert()
-    products = Product.objects.all()
     suppliers = Supplier.objects.all()
     classification = ClassificationTransfer.ENTRADA
 
@@ -139,13 +138,88 @@ def search_product(request):
     if request.method == 'POST':
         searched = request.POST.get('searched')
         print(searched)
-        products = Product.objects.filter(name__contains=searched)
+        products = Product.objects.filter(name__contains=searched, active=True)
         dict_products = {}
         for product in products:
             dict_products[product.id] = product.name
         print(dict_products)
 
     return JsonResponse(dict_products, safe=False)
+
+def movement_transference(request):
+    if not LoginUtil.is_logged(request):
+        return redirect('login')
+
+    message = MessageAlert()
+    stocks_origin = Stock.objects.filter(active=True)
+    stocks_destination = Stock.objects.filter(active=True).exclude(id=1).values()
+    classification = ClassificationTransfer.TRANSFERENCIA
+
+    if request.method == 'POST':
+        STOCK_ENTRADA_ID = 1
+        form = {}
+        form['stock-origin'] = request.POST.get('stock-origin')
+        form['stock-destination'] = request.POST.get('stock-destination')
+        form['quantity'] = request.POST.get('quantity')
+        form['product_id'] = request.POST.get('product_id')
+        form['product_name'] = request.POST.get('product_name')
+
+        message.messages = validate_transference(form)
+        
+        if message.messages:
+            return render(request, 'movements/transference.html', {'messages' : message.messages, 'movement' : form, 'stocks_origin' : stocks_origin,
+                                                            'stocks_destination' : stocks_destination, 'classification' : classification})
+        
+        transfer_origin = History()
+        transfer_origin.product_id = int(form['product_id'])
+        transfer_origin.quantity = (-1)*int(form['quantity'])
+        transfer_origin.classification = classification
+        transfer_origin.stock_id = form['stock-origin']
+        transfer_origin.user_id = int(request.session['user_id'])
+        transfer_origin.save()
+
+        transfer_destination = History()
+        transfer_destination.product_id = int(form['product_id'])
+        transfer_destination.quantity = int(form['quantity'])
+        transfer_destination.classification = classification
+        transfer_destination.stock_id = form['stock-destination']
+        transfer_destination.user_id = int(request.session['user_id'])
+        transfer_destination.save()
+
+        success_message = "Transferência realizada com sucesso."
+        return render(request, 'movements/transference.html', {'success_message' : success_message})
+
+
+    return render(request, 'movements/transference.html', {'stocks_origin' : stocks_origin, 'stocks_destination' : stocks_destination,
+                                                     'classification' : classification})
+
+def validate_transference(movement):
+    message = MessageAlert()
+    if not movement['stock-origin'] or not movement['stock-destination'] or not movement['product_id'] or not movement['quantity']:
+        error_text = "Todos os campos devem ser preenchidos"
+        message.add(error_text)
+
+    if movement['product_id'] == '':
+        movement['product_id'] = 0
+    if int(movement['product_id']) <= 0:
+        error_text = "Selecione um Produto"
+        message.add(error_text)
+
+    if int(movement['stock-origin']) <= 0:
+        error_text = "Selecione o Estoque de Origem"
+        message.add(error_text)
+
+    if int(movement['stock-destination']) <= 0:
+        error_text = "Selecione o Estoque de Destino"
+        message.add(error_text)
+
+    if movement['quantity'] == '':
+        movement['quantity'] = 0
+    if int(movement['quantity']) <= 0:
+        error_text = "Informe uma Quantidade válida"
+        message.add(error_text) 
+
+    return message.messages
 
 def populate_initial_data(request):
     if not 'initial_stock' in request.session:
