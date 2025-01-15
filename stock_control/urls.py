@@ -63,6 +63,7 @@ urlpatterns = [
     path('movements/entry', view_movement.movement_entry, name = 'movement_entry'),
     path('movements/search_product', view_movement.search_product, name = 'search_product'),
     path('movements/transference', view_movement.movement_transference, name = 'movement_transference'),
+    path('movements/search_product_quantity', view_movement.search_product_quantity, name = 'search_product_quantity'),
 
     path('', lambda req: redirect('/movements/')),
 

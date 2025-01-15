@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+import json
+from django.db.models import Sum
+from django.db import connection
 from app_stock.models.model_product import Product
 from app_stock.models.model_history import History
 from app_stock.models.model_supplier import Supplier
@@ -220,6 +223,56 @@ def validate_transference(movement):
         message.add(error_text) 
 
     return message.messages
+
+def search_product_quantity(request):
+    if request.method == 'POST':
+        searched = request.POST.get('searched')
+        stock_id = request.POST.get('stock_id')
+        #print('searched: ' +searched)
+        #products = Product.objects.filter(
+        #    name__icontains=searched,
+        #    #active=True
+        #    history__stock_id=1
+        #    ).aggregate(
+        #        quantity=Sum('history__quantity')
+        #    ).values('id', 'name', 'quantity')
+        #dict_products = {}
+        #for product in products:
+        #    dict_products[product.id] = product.name
+        #print(dict_products)
+
+    #
+
+    stock_id = 1
+    list_products = []
+    dict_products = {}
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT p.id, p.name, h.quantity FROM app_stock_product p JOIN app_stock_history h ON p.id = h.product_id WHERE p.name LIKE '%"+ searched +"%' AND p.active = 1 AND h.stock_id = "+ str(stock_id))
+        rows = cursor.fetchall()
+        for row in rows:
+            print(row[0])
+            print(row[1])
+            print(row[2])
+            dict_products['id'] = row[0]
+            dict_products['name'] = row[1]
+            dict_products['quantity'] = row[2]
+            list_products.append(dict_products)
+            dict_products = {}
+
+        print(rows)
+        print(rows[0][0])
+        print(dict_products)
+        print(list_products)
+
+    #https://docs.djangoproject.com/en/5.1/topics/db/sql/
+    #
+    print('dict_produtos: ')
+    for item in dict_products:
+        print(item[0])
+        print(item[1])
+
+    data = json.dumps(list_products)
+    return JsonResponse(data, safe=False)
 
 def populate_initial_data(request):
     if not 'initial_stock' in request.session:
