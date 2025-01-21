@@ -166,6 +166,7 @@ def movement_transference(request):
         form['quantity'] = request.POST.get('quantity')
         form['product_id'] = request.POST.get('product_id')
         form['product_name'] = request.POST.get('product_name')
+        form['choosed_product_quantity'] = request.POST.get('choosed_product_quantity')
 
         message.messages = validate_transference(form)
         
@@ -190,7 +191,7 @@ def movement_transference(request):
         transfer_destination.save()
 
         success_message = "Transferência realizada com sucesso."
-        return render(request, 'movements/transference.html', {'success_message' : success_message})
+        return render(request, 'movements/transference.html', {'success_message' : success_message, 'stocks_origin' : stocks_origin, 'stocks_destination' : stocks_destination})
 
 
     return render(request, 'movements/transference.html', {'stocks_origin' : stocks_origin, 'stocks_destination' : stocks_destination,
@@ -198,7 +199,7 @@ def movement_transference(request):
 
 def validate_transference(movement):
     message = MessageAlert()
-    if not movement['stock-origin'] or not movement['stock-destination'] or not movement['product_id'] or not movement['quantity']:
+    if not movement['stock-origin'] or not movement['stock-destination'] or not movement['product_id'] or not movement['quantity'] or not movement['choosed_product_quantity']:
         error_text = "Todos os campos devem ser preenchidos"
         message.add(error_text)
 
@@ -220,52 +221,39 @@ def validate_transference(movement):
         movement['quantity'] = 0
     if int(movement['quantity']) <= 0:
         error_text = "Informe uma Quantidade válida"
-        message.add(error_text) 
+        message.add(error_text)
+    if movement['choosed_product_quantity'] == '':
+        movement['choosed_product_quantity'] = 0 
+    if int(movement['quantity']) > int(movement['choosed_product_quantity']):
+        error_text = "Produto selecionado não possui Quantidade suficiente"
+        message.add(error_text)
 
     return message.messages
 
 def search_product_quantity(request):
+    searched = ''
     if request.method == 'POST':
         searched = request.POST.get('searched')
         stock_id = request.POST.get('stock_id')
-        #print('searched: ' +searched)
-        #products = Product.objects.filter(
-        #    name__icontains=searched,
-        #    #active=True
-        #    history__stock_id=1
-        #    ).aggregate(
-        #        quantity=Sum('history__quantity')
-        #    ).values('id', 'name', 'quantity')
-        #dict_products = {}
-        #for product in products:
-        #    dict_products[product.id] = product.name
-        #print(dict_products)
 
-    #
-
-    stock_id = 1
     list_products = []
     dict_products = {}
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p.id, p.name, h.quantity FROM app_stock_product p JOIN app_stock_history h ON p.id = h.product_id WHERE p.name LIKE '%"+ searched +"%' AND p.active = 1 AND h.stock_id = "+ str(stock_id))
+        query = """SELECT p.id, p.name, SUM(h.quantity) FROM app_stock_product p INNER JOIN app_stock_history h ON p.id = h.product_id
+                WHERE p.name LIKE '%"""+ searched +"%' AND p.active = 1 AND h.stock_id = "+ str(stock_id) +""
+        query += " GROUP BY p.id"        
+        
+        cursor.execute(query)
         rows = cursor.fetchall()
-        for row in rows:
-            print(row[0])
-            print(row[1])
-            print(row[2])
-            dict_products['id'] = row[0]
-            dict_products['name'] = row[1]
-            dict_products['quantity'] = row[2]
-            list_products.append(dict_products)
-            dict_products = {}
 
-        print(rows)
-        print(rows[0][0])
-        print(dict_products)
-        print(list_products)
+        if rows:
+            for row in rows:
+                dict_products['id'] = row[0]
+                dict_products['name'] = row[1]
+                dict_products['quantity'] = row[2]
+                list_products.append(dict_products)
+                dict_products = {}
 
-    #https://docs.djangoproject.com/en/5.1/topics/db/sql/
-    #
     print('dict_produtos: ')
     for item in dict_products:
         print(item[0])

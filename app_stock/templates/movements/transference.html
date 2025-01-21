@@ -18,14 +18,28 @@
                     </span>
                 </div>
 
-                <div id="product_list" class="input-group mb-2">
+                <div id="" class="input-group mb-2">
+                </div>
 
+                <!-- Table Produtos -->
+                <div id="product_list" class="input-group mb-2">
+                 <table id="tb_product_quantity" class="table table-bordered">
+                  <thead>
+                    <tr></tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                 </table>
+
+                 <input id="temp_product_id" type="hidden" />
+                 <input id="temp_product_name" type="hidden" />
+                 <input id="temp_product_quantity" type="hidden" />
                 </div>
             <!--</form>-->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="btn_add_product" onclick="">Adicionar Produto</button>
+          <button type="button" class="btn btn-primary" id="btn_add_product_quantity" onclick="">Adicionar Produto</button>
         </div>
       </div>
     </div>
@@ -43,7 +57,7 @@
 
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-                <div class="mb-2">
+                <div id="div_message_error" class="mb-2">
                     {% for message in messages %}
                     <span class="message_error" role="alert">{{message}}</span>
                     {% endfor %}
@@ -81,6 +95,7 @@
                                 <span class="visually-hidden">Button</span>
                             </button>
                             <input id="id_choosed_product" type="hidden" name="product_id" value="{{movement.product_id}}" />
+                            <input id="quantity_choosed_product" type="hidden" name="choosed_product_quantity" value="{{movement.choosed_product_quantity}}" />
                             <input id="txt_choosed_product" name="product_name" type="text" class="form-control form-control-sm" value="{{movement.product_name}}" readonly />
 
                             <label class="form-label text-center col-12" for="txt_choosed_product">Produto</label>
@@ -92,7 +107,7 @@
                         </div>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="classification" id="classificationLabel" class="form-control form-control-sm"
+                            <input name="classification" id="classificationLabel" class="form-control form-control-sm text-center"
                                 value="{{classification}}" readonly />
                             <label class="form-label" for="classificationLabel">Classificação</label>
                         </div>
