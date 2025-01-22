@@ -5,17 +5,31 @@
       <div class="mask d-flex align-items-center h-100">
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div class="col-12">
+            <div class="col-12 mb-5">
                 <div style="margin-top: 10px;">
-                    <a class="btn btn-outline-info" style="text-decoration: none;" href="{% url 'movement_entry' %}">Entrada de Item</a>
                 </div>
+                <select name="classification" id="classificationSelect" class="align-items-center inline lh-lg" sel>
+                  <option value="0" class="form-label text-center">Selecione a Classificação</option>
+                  {% for supplier in suppliers %}
+                  <option value="{{supplier.id}}" class="form-label text-center">{{supplier.name}}</option>
+                  {% endfor %}
+                </select>
+
+                <select name="stock" id="stockSelect" class="align-items-center inline lh-lg" sel>
+                  <option value="0" class="form-label text-center">Selecione o Estoque</option>
+                  {% for supplier in suppliers %}
+                  <option value="{{supplier.id}}" class="form-label text-center">{{supplier.name}}</option>
+                  {% endfor %}
+                </select>
+
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Adicionar</button>
             </div>
 
             <div class="col-12">
               <div class="table-responsive overflow-visible">
                 <table class="table table-dark table-bordered mb-0 table-hover table-striped">
                   <thead>
-                    <tr class="table-active d-flex">
+                    <tr class="table-active">
                       <th class="col-1" scope="col">ID</th>
                       <th class="col-2" scope="col">NOTA</th>
                       <th class="col-1" scope="col">DATA DA NOTA</th>
@@ -24,21 +38,21 @@
                       <th class="col-2" scope="col">QUANTIDADE</th>
                       <th class="col-2" scope="col">FORNECEDOR</th>
                       <th class="col-2" scope="col">CLASSIFICAÇÃO</th>
-                      <th class="col-2" scope="col">USUÁRIO</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
                     {% for movement in movements %}
-                    <tr class="table-active d-flex">
+                    <tr class="table-active">
                         <th class="col-1" scope="row">{{movement.id}}</td>
                         <td class="col-2">{{movement.invoice}}</td>
                         <td class="col-1">{{movement.invoice_date}}</td>
-                        <td class="col-2">{{movement.stock_id}}</td>
-                        <td class="col-2">{{movement.product_id}}</td>
+                        <td class="col-2">{{movement.stock}}</td>
+                        <td class="col-2">{{movement.product}}</td>
                         <td class="col-2">{{movement.quantity}}</td>
-                        <td class="col-2">{{movement.supplier_id}}</td>
+                        <td class="col-2">{{movement.supplier}}</td>
                         <td class="col-2">{{movement.classification}}</td>
-                        <td class="col-2">{{movement.user_id}}</td>
+                        
                     </tr>
                     {% endfor %}
                   </tbody>

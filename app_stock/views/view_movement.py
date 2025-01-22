@@ -24,7 +24,38 @@ def movement_list(request):
         'movements': History.objects.all()
     }
 
-    return render(request, 'movements/index.html', movements)
+    stock_id = 0
+    classification = ''
+    list_movements = []
+    dict_movements = {}
+    with connection.cursor() as cursor:
+        query = """SELECT h.id, h.invoice, h.invoice_date, st.name, p.name, h.quantity, sp.name, h.classification
+                FROM app_stock_history h INNER JOIN app_stock_stock st ON h.stock_id = st.id
+                INNER JOIN app_stock_product p ON h.product_id = p.id
+                LEFT JOIN app_stock_supplier sp ON h.supplier_id = sp.id
+                WHERE h.product_id = p.id"""
+        if classification != '':
+            query += " AND h.classification = '"+ classification +"'"
+        if stock_id > 0:
+            query += " AND h.stock_id = "+ str(stock_id)
+        
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        if rows:
+            for row in rows:
+                dict_movements['id'] = row[0]
+                dict_movements['invoice'] = row[1]
+                dict_movements['invoice_date'] = row[2]
+                dict_movements['stock'] = row[3]
+                dict_movements['product'] = row[4]
+                dict_movements['quantity'] = row[5]
+                dict_movements['supplier'] = row[6]
+                dict_movements['classification'] = row[7]
+                list_movements.append(dict_movements)
+                dict_movements = {}
+
+    return render(request, 'movements/index.html', { 'movements' : list_movements})
 
 def movement_entry(request):
     if not LoginUtil.is_logged(request):

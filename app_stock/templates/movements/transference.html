@@ -66,7 +66,7 @@
                   <div class="container-fluid">
                     <form action="{% url 'movement_transference' %}" method="POST">
                         {% csrf_token %}
-                        <p class="text-white-50 mb-5">Transferência de Estoques</p>
+                        <h5><p class="text-white-50 mb-5">Transferência de Estoques</p></h5>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                           <select name="stock-origin" id="stockOriginSelect" class="form-select align-items-center" sel>

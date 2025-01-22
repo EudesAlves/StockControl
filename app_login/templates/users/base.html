@@ -17,13 +17,26 @@
 
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="{% url 'home' %}">Usuários</a>
-      <a href="{% url 'tech_list' %}">Técnicos</a>
-      <a href="{% url 'supplier_list' %}">Fornecedores</a>
-      <a href="{% url 'product_list' %}">Produtos</a>
-      <a href="{% url 'stock_list' %}">Estoques</a>
-      <a href="{% url 'movement_list' %}">Movimentações</a>
+      <a data-bs-toggle="collapse" href="#registerCollapseGroup" role="button" aria-controls="registerCollapseGroup">Cadastro</a>
+      <div id="registerCollapseGroup" class="collapse">
+        <a href="{% url 'home' %}">Usuários</a>
+        <a href="{% url 'tech_list' %}">Técnicos</a>
+        <a href="{% url 'supplier_list' %}">Fornecedores</a>
+        <a href="{% url 'product_list' %}">Produtos</a>
+        <a href="{% url 'stock_list' %}">Estoques</a>
+      </div>
+      <hr class="solid text-white">
+      
+      <a href="{% url 'movement_entry' %}">Entrada</a>
       <a href="{% url 'movement_transference' %}">Transferência</a>
+      <hr class="solid text-white">
+
+      <a data-bs-toggle="collapse" href="#reportCollapseGroup" role="button" aria-controls="reportCollapseGroup">Relatório</a>
+      <div id="reportCollapseGroup" class="collapse">
+        <a href="{% url 'movement_list' %}">Movimentações</a>
+      </div>
+      
+      
     </div>
 
     <div id="main" style="height: auto;">
