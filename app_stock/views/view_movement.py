@@ -20,14 +20,23 @@ def movement_list(request):
 
     populate_initial_data(request)
     
-    movements = {
-        'movements': History.objects.all()
-    }
+    classifications = [ ClassificationTransfer.ENTRADA, ClassificationTransfer.TRANSFERENCIA, ClassificationTransfer.RETORNO_DEFEITO ]
+
+    stocks = Stock.objects.filter(active=True)
 
     stock_id = 0
     classification = ''
     list_movements = []
     dict_movements = {}
+
+    if request.method == 'POST':
+        form = {}
+        stock_id = int(request.POST.get('stock'))
+        classification = request.POST.get('classification')
+        print(stock_id)
+        print(classification)
+
+
     with connection.cursor() as cursor:
         query = """SELECT h.id, h.invoice, h.invoice_date, st.name, p.name, h.quantity, sp.name, h.classification
                 FROM app_stock_history h INNER JOIN app_stock_stock st ON h.stock_id = st.id
@@ -55,7 +64,7 @@ def movement_list(request):
                 list_movements.append(dict_movements)
                 dict_movements = {}
 
-    return render(request, 'movements/index.html', { 'movements' : list_movements})
+    return render(request, 'movements/index.html', { 'movements' : list_movements, 'stocks' : stocks, 'classifications' : classifications })
 
 def movement_entry(request):
     if not LoginUtil.is_logged(request):
