@@ -26,6 +26,7 @@ from app_stock.views import view_product
 from app_stock.views import view_supplier
 from app_stock.views import view_stock
 from app_stock.views import view_movement
+from app_stock.views import view_withdraw
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -64,6 +65,7 @@ urlpatterns = [
     path('movements/search_product', view_movement.search_product, name = 'search_product'),
     path('movements/transference', view_movement.movement_transference, name = 'movement_transference'),
     path('movements/search_product_quantity', view_movement.search_product_quantity, name = 'search_product_quantity'),
+    path('movements/withdraw', view_withdraw.withdraw_return, name = 'withdraw'),
 
     path('', lambda req: redirect('/movements/')),
 

@@ -8,6 +8,8 @@ from app_login.util.LoginUtil import *
 class ClassificationTransfer(models.TextChoices):
     ENTRADA = 'Entrada', _('Entrada')
     TRANSFERENCIA = 'Transferência', _('Transferência')
+    RETIRADA = 'Retirada', _('Retirada')
+    DEVOLUCAO = 'Devolução', _('Devolução')
     RETORNO_DEFEITO = 'Retorno Defeito', _('Retorno Defeito')
 
 class StockUtil():

@@ -157,4 +157,12 @@ $(document).ready(function() {
         $('#txt_choosed_product').attr('value', '');
         $('#tb_product_quantity').html('');
     }
+
+    // Withdraw Return - Product Quantity //
+    $(document).on("click", "#btn_search_product_withdraw_quantity", function(e) {
+        e.preventDefault();
+        let stock_id = $('input[name=stock_id]').val();
+        
+        request_product_data(stock_id);
+    });
 });

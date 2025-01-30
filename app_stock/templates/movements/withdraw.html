@@ -1,0 +1,128 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<!-- Modal Produto -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Escolha o Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!--form>-->
+                {% csrf_token %}
+                <div class="input-group mb-2">
+                        <input type="text" class="form-control border-right-0 pl-3" id="txt_search_product" placeholder="Digite o nome do Produto" value="">
+                        <span class="input-group-append">
+                        <button id="btn_search_product_withdraw_quantity" class="btn ripple btn-primary" onclick=""><i class="fa fa-search">Busca</i></button>
+                    </span>
+                </div>
+
+                <div id="" class="input-group mb-2">
+                </div>
+
+                <!-- Table Produtos -->
+                <div id="product_list" class="input-group mb-2">
+                 <table id="tb_product_quantity" class="table table-bordered">
+                  <thead>
+                    <tr></tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                 </table>
+
+                 <input id="temp_product_id" type="hidden" />
+                 <input id="temp_product_name" type="hidden" />
+                 <input id="temp_product_quantity" type="hidden" />
+                </div>
+            <!--</form>-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btn_add_product_quantity" onclick="">Adicionar Produto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div>
+            {% if success_message %}
+            <span class="message_success text-white" role="alert">{{success_message}}</span>
+            {% endif %}
+          </div>
+
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+                <div id="div_message_error" class="mb-2">
+                    {% for message in messages %}
+                    <span class="message_error" role="alert">{{message}}</span>
+                    {% endfor %}
+                  </div>
+
+                  <div class="container-fluid">
+                    <form action="{% url 'withdraw' %}" method="POST">
+                        {% csrf_token %}
+                        <h5><p class="text-white-50 mb-5">Retirada  |  Devolução</p></h5>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                          <select name="classification" id="classificationSelect" class="form-select align-items-center" sel>
+                              <!--option value="0" class="form-label text-center">Selecione a Classificação</option-->
+                              {% for classification in classifications %}
+                              <option value="{{classification}}" class="form-label text-center">{{classification}}</option>
+                              {% endfor %}
+                          </select>
+                          <label class="form-label" for="classificationSelect">Classificação</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                          <select name="technician" id="technicianSelect" class="form-select align-items-center" sel>
+                              <option value="0" class="form-label text-center">Selecione o Técnico</option>
+                              {% for technician in technicians %}
+                              <option value="{{technician.id}}" class="form-label text-center">{{technician.name}}</option>
+                              {% endfor %}
+                          </select>
+                          <label class="form-label" for="technicianSelect">Técnico</label>
+                        </div>
+
+                        <div data-mdb-input-init class="input-group form-outline form-white mb-4">
+                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                                </svg>
+                                <span class="visually-hidden">Button</span>
+                            </button>
+                            <input id="id_choosed_product" type="hidden" name="product_id" value="{{movement.product_id}}" />
+                            <input id="quantity_choosed_product" type="hidden" name="choosed_product_quantity" value="{{movement.choosed_product_quantity}}" />
+                            <input id="txt_choosed_product" name="product_name" type="text" class="form-control form-control-sm" value="{{movement.product_name}}" readonly />
+
+                            <label class="form-label text-center col-12" for="txt_choosed_product">Produto</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                            <input name="quantity" type="number" id="quantityInput" class="form-control form-control-sm" value="{{movement.quantity}}" />
+                            <label class="form-label" for="quantityInput">Quantidade</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                          <input name="stock_id" id="stockIdLabel" type="hidden" class="form-control form-control-sm text-center"
+                          value="{{stock.id}}" />
+                            <input name="stock_name" id="stockNameLabel" class="form-control form-control-sm text-center"
+                                value="{{stock.name}}" readonly />
+                            <label class="form-label" for="stockNameLabel">Estoque</label>
+                        </div>
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Salvar</button>
+                    </form>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}
