@@ -24,8 +24,13 @@
                         <p class="text-white-50 mb-5">Informe os dados do Estoque</p>
 
                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                            <input name="stock_name" type="text" id="typeNameX" class="form-control form-control-sm" value="{{stock.name}}" />
-                            <label class="form-label" for="typeEmailX">Nome</label>
+                            <input name="stock_name" type="text" id="stockName" class="form-control form-control-sm" value="{{stock.name}}" />
+                            <label class="form-label" for="stockName">Nome</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline form-white mb-4 form-switch">
+                          <input name="stock_for_use" type="checkbox" id="stockForUse" class="form-check-input" />
+                          <label class="form-check-label" for="stockForUse">Marcar como Estoque para Uso</label>
                         </div>
 
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Adicionar</button>

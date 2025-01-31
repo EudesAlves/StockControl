@@ -25,6 +25,13 @@ def stock_register(request):
     if request.method == 'POST':
         form = {}
         form['name'] = request.POST.get('stock_name')
+        form['for_use'] = False
+        checkbox_for_use = request.POST.get('stock_for_use')
+        if checkbox_for_use == 'on':
+            form['for_use'] = True
+
+        
+        print(form['for_use'])
 
         message.messages = validate_stock(form)
         if message.messages:
@@ -32,6 +39,7 @@ def stock_register(request):
         
         stock = Stock()
         stock.name = form['name']
+        stock.for_use = bool(form['for_use'])
         stock.save()
 
         success_message = "Estoque " +form['name']+ " cadastrado com sucesso."
