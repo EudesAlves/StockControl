@@ -28,6 +28,12 @@
                             <label class="form-label" for="typeEmailX">Nome</label>
                         </div>
 
+                        <div data-mdb-input-init class="form-outline form-white mb-4 form-switch">
+                          <input type="hidden" id="for_use_checked" value="{{for_use_checked}}" />
+                          <input name="stock_for_use" type="checkbox" id="stockForUse" class="form-check-input" />
+                          <label class="form-check-label" for="stockForUse">Marcar como Estoque para Uso</label>
+                        </div>
+
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-info btn-lg px-5" type="submit">Atualizar</button>
                         <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'stock_list' %}">Cancelar</a>
                     </form>

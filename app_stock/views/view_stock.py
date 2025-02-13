@@ -21,6 +21,7 @@ def stock_register(request):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    for_use_checked = False
     message = MessageAlert()
     if request.method == 'POST':
         form = {}
@@ -29,13 +30,14 @@ def stock_register(request):
         checkbox_for_use = request.POST.get('stock_for_use')
         if checkbox_for_use == 'on':
             form['for_use'] = True
-
+            for_use_checked = True
         
         print(form['for_use'])
+        
 
         message.messages = validate_stock(form)
         if message.messages:
-            return render(request, 'stocks/register.html', {'messages' : message.messages, 'stock' : form})
+            return render(request, 'stocks/register.html', {'messages' : message.messages, 'stock' : form, 'for_use_checked' : for_use_checked})
         
         stock = Stock()
         stock.name = form['name']
@@ -45,32 +47,42 @@ def stock_register(request):
         success_message = "Estoque " +form['name']+ " cadastrado com sucesso."
         return render(request, 'stocks/register.html', {'success_message' : success_message})
 
-    return render(request, 'stocks/register.html')
+    return render(request, 'stocks/register.html', {'for_use_checked' : for_use_checked})
 
 def stock_update(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
+    for_use_checked = False
     if request.method == 'GET':
         stock = Stock.objects.get(id=id)
-        return render(request, "stocks/update.html", {"stock": stock})
+        if stock.for_use:
+            for_use_checked = True
+
+        return render(request, 'stocks/update.html', {'stock': stock, 'for_use_checked': for_use_checked})
     
     if request.method == 'POST':
         form = {}
         form['id'] = id
         form['name'] = request.POST.get('stock_name')
+        form['for_use'] = False
+        checkbox_for_use = request.POST.get('stock_for_use')
+        if checkbox_for_use == 'on':
+            form['for_use'] = True
+            for_use_checked = True
 
         message = MessageAlert()
         message.messages = validate_stock(form)
         if message.messages:
-            return render(request, 'stocks/update.html', {'messages' : message.messages, 'stock' : form})
+            return render(request, 'stocks/update.html', {'messages' : message.messages, 'stock' : form, 'for_use_checked' : for_use_checked})
 
         stock = Stock.objects.get(id=id)
         stock.name = form['name']
+        stock.for_use = bool(form['for_use'])
         stock.save()
 
         success_message = "Estoque " +form['name']+ " atualizado com sucesso."
-        return render(request, 'stocks/update.html', {'success_message' : success_message, 'stock' : form})
+        return render(request, 'stocks/update.html', {'success_message' : success_message, 'stock' : form, 'for_use_checked' : for_use_checked})
 
 def stock_delete(request, id):
     if not LoginUtil.is_logged(request):

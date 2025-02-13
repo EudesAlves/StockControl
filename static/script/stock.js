@@ -67,8 +67,6 @@ $(document).ready(function() {
 
             success : function(data){
                 const jsonData = JSON.parse(data);
-
-                // Create Table for Product Data
                 populate_product_list(jsonData);                
             }
         });
@@ -79,7 +77,7 @@ $(document).ready(function() {
         const tbody = document.createElement('tbody');
         tbody.classList.add("w-100");
 
-        // Iterar sobre a lista de dicionários
+        // List
         for (let i = 0; i < jsonData.length; i++) {
             const item = jsonData[i];
 
@@ -165,4 +163,14 @@ $(document).ready(function() {
         
         request_product_data(stock_id);
     });
+
+    // Stock
+    set_for_use_checked();
+
+    function set_for_use_checked() {
+        let for_use_checked_value = $('#for_use_checked').val();
+        if (for_use_checked_value == 'True') {
+            $('#stockForUse').attr('checked', 'checked');
+        }
+    }
 });
