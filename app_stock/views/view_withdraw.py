@@ -21,7 +21,7 @@ def withdraw_return(request):
         return redirect('login')
     
     message = MessageAlert()
-    stock = Stock.objects.filter(active=True, id=2)
+    stock = Stock.objects.filter(active=True, for_use=True)
     
     technicians = Technician.objects.filter(active=True)
     classifications = [ ClassificationTransfer.RETIRADA, ClassificationTransfer.DEVOLUCAO ]
