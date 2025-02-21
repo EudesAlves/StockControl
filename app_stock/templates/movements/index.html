@@ -22,7 +22,7 @@
                   {% endfor %}
                 </select>
 
-                <button data-mdb-button-init data-mdb-ripple-init class="" type="submit">Adicionar</button>
+                <button data-mdb-button-init data-mdb-ripple-init class="" type="submit">Buscar</button>
               </form>
             </div>
 
@@ -44,7 +44,7 @@
                   <tbody>
                     {% for movement in movements %}
                     <tr class="table-active">
-                        <th class="col-1" scope="row">{{movement.id}}</td>
+                        <td class="col-1" scope="row">{{movement.id}}</td>
                         <td class="col-2">{{movement.invoice}}</td>
                         <td class="col-1">{{movement.invoice_date}}</td>
                         <td class="col-2">{{movement.stock}}</td>
