@@ -21,12 +21,7 @@ def balance(request):
     
     list_products = []
     dict_products = {}
-    quantity_of_products = []
     total_balance = []
-
-    teste = 'id'
-    dict_products[teste] = '1'
-    print(dict_products[teste])
 
     stocks = Stock.objects.filter(active=True)
     searched = ''
@@ -47,9 +42,12 @@ def balance(request):
 
         
         for product in list_products:
-            quantity_of_products.append(product['name'])
+            quantity_of_products = []
+            total_quantity = 0
+            print('____________ produto ' +product['name'])
 
             for stock in stocks:
+                print('____________ estoque ' +stock.name)
                 query = """SELECT SUM(h.quantity) FROM app_stock_product p 
                         INNER JOIN app_stock_history h ON p.id = h.product_id
                         WHERE p.active = 1 AND h.stock_id = """+ str(stock.id) +" AND p.id = " + str(product['id'])
@@ -57,14 +55,21 @@ def balance(request):
             
                 cursor.execute(query)
                 rows = cursor.fetchall()
-                print(rows)
+                
                 if rows:
+                    print(rows[0][0])
                     for row in rows:
-                        quantity_of_products.append(row[0])
+                        quantity_of_products.append(str(row[0]))
                 else:
                     quantity_of_products.append(str(0))
+                total_quantity += int(quantity_of_products[len(quantity_of_products)-1])
             
-            total_balance.append(quantity_of_products)
+            total_balance.append({
+                'name': product['name'],
+                'quantities': quantity_of_products,
+                'total': total_quantity
+            })
+            print('_______________________________')
 
 
 

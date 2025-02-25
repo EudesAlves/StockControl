@@ -22,14 +22,17 @@
                           {% for stock in stocks %}
                           <th class="col-1" scope="col">{{stock.name}}</th>
                           {% endfor %}
+                          <th class="col-1" scope="col">Total</th>
                         </tr>
                       </thead>
                       <tbody>
                         {% for balance in total_balance %}
                         <tr class="table-active">
-                          {% for field in balance %}
-                          <td class="col-1" scope="row">{{field}}</td>
+                          <td>{{balance.name}}</td>
+                          {% for quantity in balance.quantities %}
+                          <td class="col-1" scope="row">{{quantity}}</td>
                           {% endfor %}
+                          <td>{{balance.total}}</td>
                         </tr>                        
                         {% endfor %}
                       </tbody>
