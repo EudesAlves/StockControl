@@ -3,10 +3,6 @@ from django.http import JsonResponse
 import json
 from django.db.models import Sum
 from django.db import connection
-from app_stock.models.model_product import Product
-from app_stock.models.model_history import History
-from app_stock.models.model_supplier import Supplier
-from app_stock.models.model_technician import Technician
 from app_login.util import LoginUtil
 from app_login.util import MessageAlert
 from app_login.util.LoginUtil import *
@@ -25,6 +21,8 @@ def balance(request):
 
     stocks = Stock.objects.filter(active=True)
     searched = ''
+    if request.method == 'POST':
+        searched = request.POST.get('product_name')
 
     with connection.cursor() as cursor:
         query = """SELECT DISTINCT p.id, p.name FROM app_stock_product p
@@ -44,10 +42,8 @@ def balance(request):
         for product in list_products:
             quantity_of_products = []
             total_quantity = 0
-            print('____________ produto ' +product['name'])
 
             for stock in stocks:
-                print('____________ estoque ' +stock.name)
                 query = """SELECT SUM(h.quantity) FROM app_stock_product p 
                         INNER JOIN app_stock_history h ON p.id = h.product_id
                         WHERE p.active = 1 AND h.stock_id = """+ str(stock.id) +" AND p.id = " + str(product['id'])
@@ -57,7 +53,6 @@ def balance(request):
                 rows = cursor.fetchall()
                 
                 if rows:
-                    print(rows[0][0])
                     for row in rows:
                         quantity_of_products.append(str(row[0]))
                 else:
@@ -69,8 +64,6 @@ def balance(request):
                 'quantities': quantity_of_products,
                 'total': total_quantity
             })
-            print('_______________________________')
 
 
-
-    return render(request, 'movements/balance.html', { 'products': list_products, 'stocks': stocks, 'total_balance': total_balance })
+    return render(request, 'movements/balance.html', { 'products': list_products, 'stocks': stocks, 'total_balance': total_balance, 'product_name': searched })

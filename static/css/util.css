@@ -127,6 +127,14 @@ table {
   border: 1px solid #ddd;
 }
 
+.form-inline input {
+  vertical-align: center;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
 .form-inline button {
   padding: 10px 20px;
   background-color: rgb(77, 78, 78);
