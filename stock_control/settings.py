@@ -56,7 +56,7 @@ ROOT_URLCONF = 'stock_control.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Diretório dev local para arquivos estáticos
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'templates/static'),
 ]
 
 # Default primary key field type
