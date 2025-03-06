@@ -34,27 +34,28 @@
     color: #818181;
     display: block;
     transition: 0.3s;
+    
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  a .font20 {
+    font-size: 20px;
+  }
+
+  a .font25 {
+    font-size: 25px;
   }
   
   .sidebar a:hover {
     color: #f1f1f1;
   }
   
-  .sidebar .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-  }
-
   .sidebar i{
     color: #fff;
-    height: 60px;
     min-width: 50px;
     font-size: 28px;
     text-align: center;
-    line-height: 60px;
   }
   
   .openbtn {
@@ -72,8 +73,9 @@
   }
   
   #main {
-    transition: margin-left .5s;
+    transition: margin-left .3s;
     padding: 16px;
+    margin-left: 78px;
   }
   
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

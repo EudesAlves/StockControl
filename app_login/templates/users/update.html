@@ -19,7 +19,7 @@
                   </div>
 
                   <div class="container-fluid">
-                    <form action="{% url 'update' user.id %}" method="POST">
+                    <form action="{% url 'user_update' user.id %}" method="POST">
                         {% csrf_token %}
                         <p class="text-white-50 mb-5">Atualização de Usuário</p>
 
@@ -34,7 +34,7 @@
                         </div>
 
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-info btn-lg px-5" type="submit">Atualizar</button>
-                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Cancelar</a>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'user_list' %}">Cancelar</a>
                     </form>
                 </div>
 

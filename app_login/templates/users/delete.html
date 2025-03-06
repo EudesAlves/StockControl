@@ -14,7 +14,7 @@
             <div class="card-body p-5 text-center">
 
                   <div class="container-fluid">
-                    <form action="{% url 'delete' user.id %}" method="POST">
+                    <form action="{% url 'user_delete' user.id %}" method="POST">
                         {% csrf_token %}
                         <p class="text-white-50 mb-5">Confirme para Excluir o Usuário</p>
                         <input name="user_id" type="hidden" value="{{user.id}}" />
@@ -31,11 +31,11 @@
 
                         {% if not success_message %}
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger btn-lg px-5" type="submit">Excluir</button>
-                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Cancelar</a>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'user_list' %}">Cancelar</a>
                         {% endif %}
 
                         {% if success_message %}
-                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'home' %}">Voltar</a>
+                        <a data-mdb-button-init data-mdb-ripple-color="dark" class="btn btn-outline-light btn-lg px-5" href="{% url 'user_list' %}">Voltar</a>
                         {% endif %}
                     </form>
                 </div>

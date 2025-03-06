@@ -7,7 +7,7 @@ from app_login.util.LoginUtil import *
 from app_login.util.MessageAlert import *
 
 
-def home(request):
+def user_list(request):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
@@ -15,9 +15,9 @@ def home(request):
         'users': User.objects.filter(active=True)
     }
 
-    return render(request, 'users/home.html', users)
+    return render(request, 'users/index.html', users)
 
-def register(request):
+def user_register(request):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
@@ -53,7 +53,7 @@ def register(request):
 
     return render(request, 'users/register.html')
 
-def update(request, id):
+def user_update(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 
@@ -80,7 +80,7 @@ def update(request, id):
         success_message = "Usuário " +form['name']+ " atualizado com sucesso."
         return render(request, 'users/update.html', {'success_message' : success_message, 'user' : form})
 
-def delete(request, id):
+def user_delete(request, id):
     if not LoginUtil.is_logged(request):
         return redirect('login')
 

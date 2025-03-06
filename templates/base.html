@@ -19,17 +19,19 @@
   <body class="gradient-custom-stock">
 
     <div id="mySidebar" class="sidebar gradient-custom-sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a id="btnSidebarChange" href="javascript:void(0)" class="openSidebar" onclick="sidebarChange()">
+        <i class='bx bx-menu'></i>
+        <span class="display-none">Estoque</span>
+      </a>
       <a data-bs-toggle="collapse" href="#registerCollapseGroup" role="button" aria-controls="registerCollapseGroup">
         <i class='bx bx-customize'></i>
         <span class="display-none">Cadastro</span>
       </a>
       <div id="registerCollapseGroup" class="collapse">
-        <a href="{% url 'home' %}">
+        <a href="{% url 'user_list' %}">
           <i class='bx bx-user'></i>
           <span class="display-none">Usuários</span>
         </a>
-        <!--span class="tooltip">Usuários</span-->
         <a href="{% url 'tech_list' %}">
           <i class='bx bx-wrench'></i>
           <span class="display-none">Técnicos</span>
@@ -48,23 +50,40 @@
         </a>
       </div>
       <hr class="solid text-white">
-      
-      <a href="{% url 'movement_entry' %}">Entrada</a>
-      <a href="{% url 'movement_transference' %}">Transferência</a>
-      <a href="{% url 'withdraw' %}">Retirada Devolução</a>
+
+      <a href="{% url 'movement_entry' %}">
+        <i class='bx bx-list-plus'></i>
+        <span class="display-none">Entrada</span>
+      </a>
+      <a href="{% url 'movement_transference' %}">
+        <i class='bx bx-git-compare'></i>
+        <span class="display-none">Transferência</span>
+      </a>
+      <a href="{% url 'withdraw' %}">
+        <i class='bx bx-link-external'></i>
+        <span class="display-none">Retirada Devolução</span>
+      </a>
       <hr class="solid text-white">
 
-      <a data-bs-toggle="collapse" href="#reportCollapseGroup" role="button" aria-controls="reportCollapseGroup">Relatório</a>
+      <a data-bs-toggle="collapse" href="#reportCollapseGroup" role="button" aria-controls="reportCollapseGroup">
+        <i class='bx bx-bar-chart-alt-2'></i>
+        <span class="display-none">Relatório</span>
+      </a>
       <div id="reportCollapseGroup" class="collapse">
-        <a href="{% url 'movement_list' %}">Movimentações</a>
-        <a href="{% url 'balance' %}">Saldo</a>
+        <a href="{% url 'movement_list' %}">
+          <i class='bx bx-trending-up'></i>
+          <span class="display-none font20">Movimentações</span>
+        </a>
+        <a href="{% url 'balance' %}">
+          <i class='bx bx-list-check'></i>
+          <span class="display-none">Saldo</span>
+        </a>
       </div>
       
       
     </div>
 
     <div id="main" style="height: auto;">
-      <button id="btnOpenMenu" class="openbtn" onclick="openNav()">☰ Menu</button>  
         {% block content %}
         {% endblock %}
     </div>

@@ -1,7 +1,8 @@
+let btnChange = document.getElementById("btnSidebarChange");
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("btnOpenMenu").style.display = "none";
+    btnChange.classList.remove("openSidebar");
 
     let menu_items = document.querySelectorAll("span");
     menu_items.forEach((item) => {
@@ -12,7 +13,7 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidebar").style.width = "78px";
     document.getElementById("main").style.marginLeft= "78px";
-    document.getElementById("btnOpenMenu").style.display = "block";
+    btnChange.classList.add("openSidebar");
 
     let menu_items = document.querySelectorAll("span");
     menu_items.forEach((item) => {
@@ -20,4 +21,11 @@ function closeNav() {
     });
 }
 
-//openNav();
+function sidebarChange() {
+    if(btnChange.classList.contains("openSidebar")) {
+        openNav();
+    }
+    else {
+        closeNav();
+    }
+}
